@@ -1,0 +1,41 @@
+('''CREATE TABLE IF NOT EXISTS estudiantes (
+                    id INTEGER PRIMARY KEY,
+                    nombre TEXT,
+                    curso TEXT,
+                    grado TEXT
+                  )''')
+
+# Insertar algunos datos de ejemplo
+datos_ejemplo = [
+    (1, 'Juan Pérez', 'Matemáticas', 'Noveno'),
+    (2, 'María López', 'Ciencias', 'Décimo'),
+    (3, 'Pedro García', 'Historia', 'Undécimo')
+]
+
+cursor.executemany('INSERT INTO estudiantes VALUES (?, ?, ?, ?)', datos_ejemplo)
+
+# Guardar los cambios y cerrar la conexión
+conexion.commit()
+conexion.close()
+
+print("Base de datos de estudiantes creada y datos insertados con éxito.")
+Ahora, podemos escribir un script para comprimir la base de datos en un archivo ZIP:
+python
+Copy code
+import zipfile
+import os
+
+# Nombre del archivo de la base de datos
+nombre_bd = 'estudiantes.db'
+
+# Nombre del archivo ZIP de salida
+nombre_zip = 'estudiantes.zip'
+
+# Comprimir la base de datos en un archivo ZIP
+with zipfile.ZipFile(nombre_zip, 'w') as archivo_zip:
+    archivo_zip.write(nombre_bd)
+
+# Eliminar la base de datos original (opcional)
+os.remove(nombre_bd)
+
+print(f'Base de datos comprimida en {nombre_zip}')
